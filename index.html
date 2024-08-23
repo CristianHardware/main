@@ -25,15 +25,15 @@
                     console.log("Respuesta del servidor recibida:", response.status); // Depuración
                     if (response.ok) {
                         console.log("Contador actualizado correctamente."); // Depuración
-                        redirect();
+                      //  redirect();
                     } else {
                         console.error("Error al actualizar el contador:", response.statusText); // Depuración
-                        redirect(); // Redirige aunque falle la actualización del contador
+                      //  redirect(); // Redirige aunque falle la actualización del contador
                     }
                 })
                 .catch(error => {
                     console.error("Error en la conexión con el servidor:", error); // Depuración
-                    redirect(); // Redirige aunque falle la conexión con el servidor
+                  //  redirect(); // Redirige aunque falle la conexión con el servidor
                 });
         }
 
