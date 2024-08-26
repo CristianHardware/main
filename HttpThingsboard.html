@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar Datos a ThingsBoard</title>
+</head>
+<body>
+    <h1>Enviar datos a ThingsBoard desde GitHub Pages</h1>
+    <button id="sendMessage">Enviar Temperatura</button>
+
+    <script>
+        document.getElementById("sendMessage").onclick = function() {
+            const accessToken = 'your_device_access_token'; // Reemplaza con tu Access Token
+            const url = `https://your-thingsboard-server/api/v1/${accessToken}/telemetry`; // URL de la API de telemetría de ThingsBoard
+            
+            // Datos a enviar
+            const data = {
+                temperature: 22.5 // Ejemplo de dato a enviar
+            };
+
+            // Enviar la solicitud POST
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Datos enviados con éxito");
+                } else {
+                    console.error("Error al enviar los datos:", response.statusText);
+                }
+            })
+            .catch(error => console.error("Error en la conexión:", error));
+        };
+    </script>
+</body>
+</html>
