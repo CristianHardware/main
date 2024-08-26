@@ -3,44 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirection Page</title>
+    <title>Enviar Datos a ThingsBoard</title>
 </head>
 <body>
-    <p>Redirigiendo...Sergio</p>
+    <h1>Enviar datos a ThingsBoard desde GitHub Pages</h1>
+    <button id="sendMessage">Enviar Temperatura</button>
+
     <script>
-        // URL de destino
-        const redirectUrl = "https://www.youtube.com/watch?v=onjPLuZp6hY";
-        
-        // Función para redirigir al usuario
-        function redirect() {
-            console.log("Redireccionando a:", redirectUrl); // Depuración
-            window.location.href = redirectUrl;
-        }
+        document.getElementById("sendMessage").onclick = function() {
+            const accessToken = 'kTXSDZHGMqwo1fnEK7LE'; // Reemplaza con tu Access Token
+            const url = `https://thingsboard.cloud/api/v1/${accessToken}/telemetry`; // URL de la API de telemetría de ThingsBoard
+            
+            // Datos a enviar
+            const data = {
+                temperature: 22.5 // Ejemplo de dato a enviar
+            };
 
-        // Función para contar la visita
-        function countVisit() {
-            console.log("Iniciando conteo de visita..."); // Depuración
-            fetch('/contador')
-                .then(response => {
-                    console.log("Respuesta del servidor recibida:", response.status); // Depuración
-                    if (response.ok) {
-                        console.log("Contador actualizado correctamente."); // Depuración
-                      //  redirect();
-                    } else {
-                        console.error("Error al actualizar el contador:", response.statusText); // Depuración
-                      //  redirect(); // Redirige aunque falle la actualización del contador
-                    }
-                })
-                .catch(error => {
-                    console.error("Error en la conexión con el servidor:", error); // Depuración
-                  //  redirect(); // Redirige aunque falle la conexión con el servidor
-                });
-        }
-
-        // Llama a la función cuando la página se carga
-        window.onload = () => {
-            console.log("Página cargada, iniciando proceso de conteo y redirección."); // Depuración
-            countVisit();
+            // Enviar la solicitud POST
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Datos enviados con éxito");
+                } else {
+                    console.error("Error al enviar los datos:", response.statusText);
+                }
+            })
+            .catch(error => console.error("Error en la conexión:", error));
         };
     </script>
 </body>
